@@ -28,7 +28,7 @@ const MovieDetail = () => {
 
       {/* 포스터 이미지 */}
       <div
-        className="movie-detail_poster"
+        className="movie-detail-poster"
         style={{
           backgroundImage: `url(${imageBaseUrl}${backdrop_path})`,
         }}
@@ -36,7 +36,7 @@ const MovieDetail = () => {
       </div>
 
       {/* 영화 정보 */}
-      <div className="movie-info">
+      <div className="movie-detail-info">
 
         <div className="movie-detail_data">
           <h1 className="movie-detail_title">{title}</h1>
