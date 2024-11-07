@@ -40,3 +40,43 @@
 .read-the-docs {
   color: #888;
 }
+
+.movie-list {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.movie-list>div {
+  width: 30%;
+}
+
+.movie-list>div>img {
+  max-width: 100%; /* 바로 위 부모 요소 기준 % */
+}
+
+.movie-detail-container {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+
+.movie-detail-container>div {
+  width: 40%;
+}
+
+.movie-detail-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-detail_data {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.movie-detail_title {
+  font-size: 40px;
+}
