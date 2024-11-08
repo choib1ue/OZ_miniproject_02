@@ -1,31 +1,37 @@
-// src/components/MovieDetail.jsx
 import React, { useState, useEffect } from 'react';
-import movieDetailData from '../data/movieDetailData.json';
+import { useParams } from "react-router-dom";
+
+const API_TOKEN = import.meta.env.VITE_TMDB_TOKEN;
+const options = {method: 'GET', headers: {accept: 'application/json', Authorization: `Bearer ${API_TOKEN}`}};
 
 const MovieDetail = () => {
-  const [movieData] = useState(movieDetailData);
-  // 상태 변경 리액트 훅
 
-  // 영화 정보가 로드되었는지 확인
-  if (!movieData) {
-    return <div>Loading...</div>;
-  }
+  const { id } = useParams(); // URL에서 영화 ID를 가져오기
+  const [movieData, setMovieData] = useState(null);
 
   // 이미지 baseUrl
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
 
-  // 필요한 데이터
-  const {
-    backdrop_path,
-    title,
-    vote_average,
-    genres,
-    overview,
-  } = movieData;
+  useEffect(() => {
+    // 영화 상세 정보를 API에서 가져오는 함수
+    const fetchMovieDetail = async () => {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${id}?language=en-US`, options);
+      const data = await response.json();
+      setMovieData(data); // 영화 데이터 상태에 저장하기
+    };
+
+    fetchMovieDetail();
+  }, [id]);
+
+  if (!movieData) {
+    return <div>로딩 중</div>
+  }
+
+  const { backdrop_path, title, vote_average, genres, overview } = movieData;
 
   return (
     <div className="movie-detail-container">
-
       {/* 포스터 이미지 */}
       <div
         className="movie-detail-poster"
