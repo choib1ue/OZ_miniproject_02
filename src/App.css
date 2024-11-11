@@ -13,10 +13,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #6a4915aa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em #4c3906aa);
 }
 
 @keyframes logo-spin {
@@ -89,7 +89,7 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: wheat;
+  background-color: rgb(204, 223, 232);
   display: flex;
   flex-wrap: wrap;  
   align-items: center;

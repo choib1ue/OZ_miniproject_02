@@ -5,7 +5,7 @@ import useDebounce from "../hooks/useDebounve";
 
 const Navbar = ({onSearch}) => { // searchMovies를 받아오는 것!
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
-  const debouncedSearchTerm = useDebounce(searchTerm, 5); // 디바운스된 검색어 상태
+  const debouncedSearchTerm = useDebounce(searchTerm, 500); // 디바운스된 검색어 상태
 
   // 검색어가 변경될 때마다 검색 결과 업데이트
   useEffect(() => {
