@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
 import MovieCard from "./components/MovieCard";
 import MovieDetail from "./pages/MovieDetail";
 import Navbar from "./components/NavBar";
-import { Route, Routes } from "react-router-dom";
-import "./App.css"; // 스타일 시트는 그대로
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 
 const API_TOKEN = import.meta.env.VITE_TMDB_TOKEN;
-const API_URL = "https://api.themoviedb.org/3/movie/popular?language=en-US";
+const API_URL_POPULAR = "https://api.themoviedb.org/3/movie/popular?language=en-US"; // 인기 영화 API
+const API_URL_SEARCH = "https://api.themoviedb.org/3/search/movie?language=en-US&query="; // 검색 API
 const options = {
   method: "GET",
   headers: { accept: "application/json", Authorization: `Bearer ${API_TOKEN}` },
@@ -18,28 +19,34 @@ const options = {
 const baseUrl = "https://image.tmdb.org/t/p/w500";
 
 const App = () => {
-  // 영화 목록 데이터를 상태로 관리
+  const [movies, setMovies] = useState([]); // 영화 목록 상태
+  const [query, setQuery] = useState(""); // 검색어 상태
 
-  const [movies, setMovies] = useState([]); // 초기 상태는 빈 배열
-
+  //초기 상태: 인기 영화 목록
   // 컴포넌트가 마운트될 때 TMDb API를 호출
   useEffect(() => {
-    const fetchMovies = async () => {
-      const response = await fetch(API_URL, options); // API 호출
-      const data = await response.json(); // JSON 형태로 변환
-      setMovies(data.results); // 영화 목록 데이터를 상태에 저장
-    };
+    if (!query) {
+      const fetchMovies = async () => {
+        const response = await fetch(API_URL_POPULAR, options); // 인기 영화 API 호출
+        const data = await response.json();
+        setMovies(data.results);
+      };
+      fetchMovies();
+    }
+  }, [query]);
 
-    fetchMovies(); // fetchMovies 함수 호출로 API 데이터 가져오기
-  }, []);
-
-  if (!movies) {
-    return <div>로딩 중</div>;
-  }
+  // 검색 API 요청 함수
+  const searchMovies = async (searchTerm) => {
+    if (!searchTerm) return; // 검색어가 없는 경우 요청 건너뛰기
+    const response = await fetch(`${API_URL_SEARCH}${searchTerm}`, options);
+    const data = await response.json();
+    setMovies(data.results);
+  };
 
   return (
     <div className="app">
-      <Navbar />
+      <Navbar onSearch={searchMovies} /> 
+      {/* 검색어 입력 시 searchMovies 호출되어 검색어에 맞는 영화 목록 표시 */}
       <Routes>
         <Route
           path="/"
